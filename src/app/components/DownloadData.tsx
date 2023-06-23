@@ -1,6 +1,6 @@
 'use client'
 
-import { testsAtom } from '@/atoms'
+import { testsAtom } from '@/lib/atoms'
 import { Button } from '@/components/ui/button'
 import { TestJSON } from '@/lib/Tests'
 import { CloudArrowDown } from '@phosphor-icons/react'
@@ -11,14 +11,14 @@ export default function DownloadData() {
   const download = () => {
     const testsString = localStorage.getItem('tests')
 
-    if (!testsString) return alert('No hay datos para descargar :)')
+    if (!testsString) return alert('No hay datos para descargar.')
     const headers = [
       'nombre',
       'edad',
       'lateralidad',
-      'prueba1',
-      'prueba2',
-      'prueba3'
+      '1º Prueba',
+      '2º Prueba',
+      '3º Prueba'
     ]
     let contenido = '\ufeff' + headers.join(';') + '\n'
     const tests: TestJSON[] = JSON.parse(testsString)
@@ -46,9 +46,9 @@ export default function DownloadData() {
   }
 
   return (
-    <Button onClick={download} variant={'default'} className='dark:bg-emerald-400 bg-emerald-600'>
-      <CloudArrowDown size={24} className='mr-2'/>
-			Descargar Datos
+    <Button onClick={download} className='dark:bg-emerald-400 bg-emerald-600'>
+      <CloudArrowDown size={24} className='mr-2' />
+      Descargar Datos
     </Button>
   )
 }

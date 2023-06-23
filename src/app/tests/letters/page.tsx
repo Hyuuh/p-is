@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
-import { currentNumberTestAtom, testAtom } from '@/atoms'
+import { currentNumberTestAtom, testAtom } from '@/lib/atoms'
 import { TestData } from '@/lib/Tests'
 import { ordenarString } from '@/lib/array'
 

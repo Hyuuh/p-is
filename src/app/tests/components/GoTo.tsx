@@ -1,5 +1,5 @@
 'use client'
-import { currentNumberTestAtom } from '@/atoms'
+import { currentNumberTestAtom } from '@/lib/atoms'
 import { buttonVariants } from '@/components/ui/button'
 import { useAtomValue } from 'jotai'
 import Link from 'next/link'

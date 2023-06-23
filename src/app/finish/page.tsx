@@ -1,6 +1,6 @@
 'use client'
 
-import { testAtom, testsAtom } from '@/atoms'
+import { testAtom, testsAtom } from '@/lib/atoms'
 import { buttonVariants } from '@/components/ui/button'
 import { useAtom, useAtomValue } from 'jotai'
 import Link from 'next/link'
@@ -14,11 +14,12 @@ function Page() {
     const stringToGet = localStorage.getItem('tests')
     const tests = stringToGet ? JSON.parse(stringToGet) : []
     if (tests.length === 0) {
-      localStorage.setItem('tests', JSON.stringify([currentTest!.toJSON()]))
-      setTests([currentTest!.toJSON()])
+      const response = [currentTest!.toJSON()]
+      localStorage.setItem('tests', JSON.stringify(response))
+      setTests(response)
       return () => {}
     }
-    setTests((t) => {
+    setTests(() => {
       const response = [...tests, currentTest!.toJSON()]
       const stringToPut = JSON.stringify(response)
       localStorage.setItem('tests', stringToPut)

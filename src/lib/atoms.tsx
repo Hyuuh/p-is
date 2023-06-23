@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { TestHandler, TestJSON } from './lib/Tests'
+import { TestHandler, TestJSON } from './Tests'
 
 export const currentNumberTestAtom = atom<number>(1)
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { currentNumberTestAtom } from '@/atoms'
+import { currentNumberTestAtom } from '@/lib/atoms'
 import { useAtomValue } from 'jotai'
 
 export default function PageView() {

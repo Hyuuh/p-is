@@ -1,6 +1,6 @@
 'use client'
 
-import { testAtom } from '@/atoms'
+import { testAtom } from '@/lib/atoms'
 import { TestHandler, TestUser } from '@/lib/Tests'
 import { ShareFat } from '@phosphor-icons/react'
 import { useSetAtom } from 'jotai'
