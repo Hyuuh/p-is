@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
-import { currentNumberTestAtom, testAtom } from '@/lib/atoms'
+import { useNumberTestStore, useTestStore, useTestsStore } from '@/lib/stores'
 import { TestData } from '@/lib/Tests'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
@@ -39,11 +38,9 @@ export default function Home() {
   const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout | null>(
     null
   )
-  const [test, setTest] = useAtom(testAtom)
+  const testStore = useTestStore()
+  const numberTest = useNumberTestStore()
   const [currentTest, setCurrentTest] = useState<TestData | null>(null)
-  const [currentNumberTest, setCurrentNumberTest] = useAtom(
-    currentNumberTestAtom
-  )
   const router = useRouter()
   const [errors, setErrors] = useState<number>(0)
   const [sections, setSections] = useState<number>(1)
@@ -83,11 +80,14 @@ export default function Home() {
     '0'
   ])
   useEffect(() => {
+    if (!testStore.test) return router.push('/user')
     let currentIndex = 0
     let currentInterval: NodeJS.Timeout | null = null
     setCanResponse(false)
     const displayNextQuestion = () => {
-      const currentTest = test?.tests.find((t) => t.id === currentNumberTest)!
+      const currentTest = testStore.test?.tests.find(
+        (t) => t.id === numberTest.count
+      )!
       if (!currentTest) return router.push('/user')
       setCurrentTest(currentTest)
       const questions = currentTest.questions.find(
@@ -119,7 +119,7 @@ export default function Home() {
     form.reset({ userResponse: '' })
     clearTimeout(submitTimeout!)
     let correctAnswer: number[] | string = [...currentQuestions]
-    if (currentNumberTest == 2) correctAnswer = correctAnswer.reverse()
+    if (numberTest.count == 2) correctAnswer = correctAnswer.reverse()
     correctAnswer = correctAnswer.join('')
     if (values.userResponse == correctAnswer) {
       setRaw((r) => {
@@ -131,14 +131,11 @@ export default function Home() {
       if (sections == 8 && incisions == 2) {
         currentTest!.raw = raw.join('')
         currentTest!.errors = errors
-        const indexTest = test?.tests.findIndex(
-          (t) => t.id === currentNumberTest
+        const indexTest = testStore.test?.tests.findIndex(
+          (t) => t.id === numberTest.count
         )!
-        setTest((t) => {
-          t!.tests[indexTest] = currentTest!
-          return t
-        })
-        setCurrentNumberTest(currentNumberTest + 1)
+        testStore.editTest(currentTest!, indexTest)
+        numberTest.inc()
         router.push('/tests')
         return
       }
@@ -148,34 +145,27 @@ export default function Home() {
       } else setIncisions(2)
       setSections(sections + 1)
       setResetEffect(!resetEffect)
-      return;
+      return
     } else {
       if (errors == 1) {
         currentTest!.raw = raw.join('')
         currentTest!.errors = errors
-        const indexTest = test?.tests.findIndex(
-          (t) => t.id === currentNumberTest
+        const indexTest = testStore.test?.tests.findIndex(
+          (t) => t.id === numberTest.count
         )!
-        setTest((t) => {
-          t!.tests[indexTest] = currentTest!
-          return t
-        })
-        setCurrentNumberTest(currentNumberTest + 1)
-
+        testStore.editTest(currentTest!, indexTest)
+        numberTest.inc()
         return router.push('/tests')
       } else {
         setErrors((e) => e + 1)
         if (sections == 8 && incisions == 2) {
           currentTest!.raw = raw.join('')
           currentTest!.errors = errors
-          const indexTest = test?.tests.findIndex(
-            (t) => t.id === currentNumberTest
+          const indexTest = testStore.test?.tests.findIndex(
+            (t) => t.id === numberTest.count
           )!
-          setTest((t) => {
-            t!.tests[indexTest] = currentTest!
-            return t
-          })
-          setCurrentNumberTest(currentNumberTest + 1)
+          testStore.editTest(currentTest!, indexTest)
+          numberTest.inc()
           router.push('/tests')
           return
         }
@@ -184,7 +174,7 @@ export default function Home() {
         } else setIncisions(2)
         setSections(sections + 1)
         setResetEffect(!resetEffect)
-        return;
+        return
       }
     }
   }
@@ -222,7 +212,7 @@ export default function Home() {
               <Button
                 type='submit'
                 className='w-full'
-                disabled={canResponse || numberText != ''}>
+                hidden={canResponse || numberText != ''}>
                 <FastForward size={24} className='mr-2' />
                 Saltar
               </Button>

@@ -1,17 +1,13 @@
 'use client'
 
-import { testsAtom } from '@/lib/atoms'
+import { useTestsStore } from '@/lib/stores'
 import { Button } from '@/components/ui/button'
-import { TestJSON } from '@/lib/Tests'
 import { CloudArrowDown } from '@phosphor-icons/react'
-import { useSetAtom } from 'jotai'
 
 export default function DownloadData() {
-  const setTests = useSetAtom(testsAtom)
+  const testsStore = useTestsStore()
   const download = () => {
-    const testsString = localStorage.getItem('tests')
-
-    if (!testsString) return alert('No hay datos para descargar.')
+    if (!testsStore.tests.length) return alert('No hay datos para descargar.')
     const headers = [
       'nombre',
       'edad',
@@ -21,9 +17,7 @@ export default function DownloadData() {
       '3º Prueba'
     ]
     let contenido = '\ufeff' + headers.join(';') + '\n'
-    const tests: TestJSON[] = JSON.parse(testsString)
-    setTests(tests)
-    for (const test of tests) {
+    for (const test of testsStore.tests) {
       const row = [
         test.user.name,
         test.user.age,

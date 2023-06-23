@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
-import { currentNumberTestAtom, testAtom } from '@/lib/atoms'
+import { useNumberTestStore, useTestStore } from '@/lib/stores'
 import { TestData } from '@/lib/Tests'
 import { ordenarString } from '@/lib/array'
 
@@ -107,15 +106,18 @@ export default function Home() {
   const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout | null>(
     null
   )
-  const [test, setTest] = useAtom(testAtom)
+  const testStore = useTestStore()
+  const numberTest = useNumberTestStore()
   const [currentTest, setCurrentTest] = useState<TestData | null>(null)
-  const [currentNumberTest] = useAtom(currentNumberTestAtom)
   useEffect(() => {
+    if(!testStore.test) return router.push('/user')
     let currentIndex = 0
     let currentInterval: NodeJS.Timeout | null = null
     setCanResponse(false)
     const displayNextQuestion = () => {
-      const currentTest = test?.tests.find((t) => t.id === currentNumberTest)!
+      const currentTest = testStore.test?.tests.find(
+        (t) => t.id === numberTest.count
+      )!
       if (!currentTest) return router.push('/user')
       setCurrentTest(currentTest)
       const questions = currentTest.questions.find(
@@ -155,13 +157,11 @@ export default function Home() {
       if (sections == 10 && incisions == 3) {
         currentTest!.raw = raw.join('')
         currentTest!.errors = errors
-        const indexTest = test?.tests.findIndex(
-          (t) => t.id === currentNumberTest
+        const indexTest = testStore.test?.tests.findIndex(
+          (t) => t.id === numberTest.count
         )!
-        setTest((t) => {
-          t!.tests[indexTest] = currentTest!
-          return t
-        })
+        testStore.editTest(currentTest!, indexTest)
+        numberTest.inc()
         router.push('/finish')
         return
       }
@@ -174,26 +174,22 @@ export default function Home() {
       if (errors == 1) {
         currentTest!.raw = raw.join('')
         currentTest!.errors = errors + 1
-        const indexTest = test?.tests.findIndex(
-          (t) => t.id === currentNumberTest
+        const indexTest = testStore.test?.tests.findIndex(
+          (t) => t.id === numberTest.count
         )!
-        setTest((t) => {
-          t!.tests[indexTest] = currentTest!
-          return t
-        })
+        testStore.editTest(currentTest!, indexTest)
+        numberTest.inc()
         return router.push('/finish')
       } else {
         setErrors((e) => e + 1)
         if (sections == 10 && incisions == 3) {
           currentTest!.raw = raw.join('')
           currentTest!.errors = errors
-          const indexTest = test?.tests.findIndex(
-            (t) => t.id === currentNumberTest
+          const indexTest = testStore.test?.tests.findIndex(
+            (t) => t.id === numberTest.count
           )!
-          setTest((t) => {
-            t!.tests[indexTest] = currentTest!
-            return t
-          })
+          testStore.editTest(currentTest!, indexTest)
+          numberTest.inc()
           router.push('/finish')
           return
         }
@@ -239,7 +235,7 @@ export default function Home() {
               <Button
                 type='submit'
                 className='w-full'
-                disabled={canResponse || numberText != ''}>
+                hidden={canResponse || numberText != ''}>
                 <FastForward size={24} className='mr-2' />
                 Saltar
               </Button>

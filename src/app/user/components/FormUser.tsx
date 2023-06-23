@@ -1,9 +1,8 @@
 'use client'
 
-import { testAtom } from '@/lib/atoms'
 import { TestHandler, TestUser } from '@/lib/Tests'
 import { ShareFat } from '@phosphor-icons/react'
-import { useSetAtom } from 'jotai'
+
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
 
@@ -35,6 +34,7 @@ import {
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
+import { useTestStore } from '@/lib/stores'
 
 const formSchema = z.object({
   name: z
@@ -63,7 +63,7 @@ const formSchema = z.object({
 })
 function FormUser() {
   const router = useRouter()
-  const setTest = useSetAtom(testAtom)
+  const testStore = useTestStore()
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,7 +87,7 @@ function FormUser() {
     }
     const testHandler = new TestHandler(user)
     testHandler.setup()
-    setTest(testHandler)
+    testStore.setTest(testHandler)
     setTimeout(() => router.push('/tests'), 2300)
   }
   return (

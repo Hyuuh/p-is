@@ -1,32 +1,23 @@
 'use client'
 
-import { testAtom, testsAtom } from '@/lib/atoms'
+import { useTestStore, useTestsStore } from '@/lib/stores'
 import { buttonVariants } from '@/components/ui/button'
-import { useAtom, useAtomValue } from 'jotai'
 import Link from 'next/link'
 import { useEffect } from 'react'
-
+import { useRouter } from 'next/navigation'
 function Page() {
-  const currentTest = useAtomValue(testAtom)
-  const [, setTests] = useAtom(testsAtom)
+  const router = useRouter()
+  const testStore = useTestStore()
+  const testsStore = useTestsStore()
   useEffect(() => {
-    if (!currentTest) return () => {}
-    const stringToGet = localStorage.getItem('tests')
-    const tests = stringToGet ? JSON.parse(stringToGet) : []
-    if (tests.length === 0) {
-      const response = [currentTest!.toJSON()]
-      localStorage.setItem('tests', JSON.stringify(response))
-      setTests(response)
-      return () => {}
-    }
-    setTests(() => {
-      const response = [...tests, currentTest!.toJSON()]
-      const stringToPut = JSON.stringify(response)
-      localStorage.setItem('tests', stringToPut)
-      return response
-    })
+    if (!testStore.test)
+      return () => {
+        router.push('/')
+      }
+    testsStore.addTest(testStore.test.toJSON())
+    testStore.resetTest()
     return () => {}
-  }, [currentTest, setTests])
+  }, [router, testStore, testsStore])
   return (
     <main className='flex min-h-screen items-center justify-center text-black dark:text-white'>
       <section className=''>
@@ -34,7 +25,7 @@ function Page() {
           <p className='text-6xl uppercase font-bespoke'>
             Gracias por participar
           </p>
-          <Link className={buttonVariants({ variant: 'outline'})} href={'/'}>
+          <Link className={buttonVariants({ variant: 'outline' })} href={'/'}>
             Regresar
           </Link>
         </div>
