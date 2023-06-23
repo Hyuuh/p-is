@@ -1,15 +1,20 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage, devtools } from 'zustand/middleware'
 import { TestData, TestHandler, TestJSON } from './Tests'
 
 interface numberTestState {
   count: number
   inc: () => void
 }
-export const useNumberTestStore = create<numberTestState>((set) => ({
-  count: 1,
-  inc: () => set((state) => ({ count: state.count + 1 }))
-}))
+export const useNumberTestStore = create<
+  numberTestState,
+  [['zustand/devtools', never]]
+>(
+  devtools((set) => ({
+    count: 1,
+    inc: () => set((state) => ({ count: state.count + 1 }))
+  }))
+)
 
 interface TestsStore {
   tests: TestJSON[]
@@ -18,22 +23,27 @@ interface TestsStore {
   editTest: (test: TestJSON, index: number) => void
 }
 
-export const useTestsStore = create<TestsStore, [['zustand/persist', unknown]]>(
-  persist(
-    (set, get) => ({
-      tests: [],
-      addTest: (test: TestJSON) => set({ tests: [...get().tests, test] }),
-      setTests: (tests: TestJSON[]) => set({ tests }),
-      editTest: (test: TestJSON, index: number) => {
-        const tests = get().tests
-        tests[index] = test
-        set({ tests })
+export const useTestsStore = create<
+  TestsStore,
+  [['zustand/devtools', never], ['zustand/persist', unknown]]
+>(
+  devtools(
+    persist(
+      (set, get) => ({
+        tests: [],
+        addTest: (test: TestJSON) => set({ tests: [...get().tests, test] }),
+        setTests: (tests: TestJSON[]) => set({ tests }),
+        editTest: (test: TestJSON, index: number) => {
+          const tests = get().tests
+          tests[index] = test
+          set({ tests })
+        }
+      }),
+      {
+        name: 'tests',
+        storage: createJSONStorage(() => localStorage)
       }
-    }),
-    {
-      name: 'tests',
-      storage: createJSONStorage(() => localStorage)
-    }
+    )
   )
 )
 

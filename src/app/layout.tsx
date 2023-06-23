@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={`${bespokeFont.variable} ${supremeFont.variable} select-none font-supreme`}>
+      className={`${bespokeFont.variable} ${supremeFont.variable} select-none font-supreme min-h-screen overflow-hidden`}>
       <body id='bg__body'>
         <ToastProvider swipeDirection='right'>
           <Toast />

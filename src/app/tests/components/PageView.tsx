@@ -1,28 +1,29 @@
 'use client'
 
-import { currentNumberTestAtom } from '@/lib/stores'
-import { useAtomValue } from 'jotai'
+import { useNumberTestStore } from '@/lib/stores'
 
 export default function PageView() {
-  const currentTest = useAtomValue(currentNumberTestAtom)
+  const numberTest = useNumberTestStore()
   const testText = [
     'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.',
     'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.',
     'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.'
   ]
   return (
-    <main className='flex flex-col items-center justify-center gap-10 text-black dark:text-white'>
+    <section className='flex flex-col items-center justify-center gap-10 text-black dark:text-white'>
       <div className=''>
-        <p className='text-6xl uppercase tracking-widest font-bespoke '>
+        <p className='text-6xl uppercase tracking-widest font-bespoke text-center'>
           Prueba actual{' '}
           <span className='font-black font-sans text-emerald-500'>
-            {currentTest}
+            {numberTest.count}
           </span>
         </p>
       </div>
-      <div className=''>
-        <p className='text-xl'>{testText[currentTest - 1]}</p>
+      <div className='w-60 md:w-72 lg:w-full'>
+        <p className='text-2xl text-center md:text-3xl'>
+          {testText[numberTest.count - 1]}
+        </p>
       </div>
-    </main>
+    </section>
   )
 }

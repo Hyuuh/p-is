@@ -142,8 +142,8 @@ export default function Home() {
 
       if (incisions == 2) {
         setIncisions(1)
+        setSections(sections + 1)
       } else setIncisions(2)
-      setSections(sections + 1)
       setResetEffect(!resetEffect)
       return
     } else {
@@ -171,8 +171,8 @@ export default function Home() {
         }
         if (incisions == 2) {
           setIncisions(1)
+          setSections(sections + 1)
         } else setIncisions(2)
-        setSections(sections + 1)
         setResetEffect(!resetEffect)
         return
       }

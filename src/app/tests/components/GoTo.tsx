@@ -1,15 +1,18 @@
 'use client'
-import { currentNumberTestAtom } from '@/lib/stores'
+
+import { useNumberTestStore } from '@/lib/stores'
 import { buttonVariants } from '@/components/ui/button'
-import { useAtomValue } from 'jotai'
+
 import Link from 'next/link'
 
 function GoTo() {
-  const currentTest = useAtomValue(currentNumberTestAtom)
+  const numberTest = useNumberTestStore()
   let URL = '/tests/numbers'
-  if (currentTest === 3) URL = '/tests/letters'
+  if (numberTest.count === 3) URL = '/tests/letters'
   return (
-    <Link href={URL} className={buttonVariants({})}>
+    <Link href={URL} className={buttonVariants({
+      size: "lg"
+    })}>
       Ir a la prueba &rarr;
     </Link>
   )

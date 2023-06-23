@@ -110,7 +110,7 @@ export default function Home() {
   const numberTest = useNumberTestStore()
   const [currentTest, setCurrentTest] = useState<TestData | null>(null)
   useEffect(() => {
-    if(!testStore.test) return router.push('/user')
+    if (!testStore.test) return router.push('/user')
     let currentIndex = 0
     let currentInterval: NodeJS.Timeout | null = null
     setCanResponse(false)
@@ -167,8 +167,8 @@ export default function Home() {
       }
       if (incisions == 3) {
         setIncisions(1)
+        setSections(sections + 1)
       } else setIncisions(incisions + 1)
-      setSections(sections + 1)
       setResetEffect(!resetEffect)
     } else {
       if (errors == 1) {
@@ -195,8 +195,8 @@ export default function Home() {
         }
         if (incisions == 3) {
           setIncisions(1)
+          setSections(sections + 1)
         } else setIncisions(incisions + 1)
-        setSections(sections + 1)
         setResetEffect(!resetEffect)
       }
     }

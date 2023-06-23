@@ -88,7 +88,7 @@ function FormUser() {
     const testHandler = new TestHandler(user)
     testHandler.setup()
     testStore.setTest(testHandler)
-    setTimeout(() => router.push('/tests'), 2300)
+    router.push('/tests')
   }
   return (
     <Card className='w-[400px] p-5'>
@@ -162,7 +162,7 @@ function FormUser() {
                 </FormItem>
               )}
             />
-            <Button type='submit' className='w-full' variant={'outline'}>
+            <Button type='submit' className='w-full'>
               <ShareFat size={24} className='mr-2' />
               Submit
             </Button>
