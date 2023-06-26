@@ -2,7 +2,6 @@ import LayoutProvider from '@/components/providers/LayoutProvider'
 import '../styles/globals.css'
 
 import localFont from 'next/font/local'
-import { Toast, ToastProvider } from '@/components/ui/toast'
 
 const bespokeFont = localFont({
   display: 'swap',
@@ -30,9 +29,6 @@ export default function RootLayout({
       lang='en'
       className={`${bespokeFont.variable} ${supremeFont.variable} select-none font-supreme min-h-screen overflow-hidden`}>
       <body id='bg__body'>
-        <ToastProvider swipeDirection='right'>
-          <Toast />
-        </ToastProvider>
         <LayoutProvider>{children}</LayoutProvider>
       </body>
     </html>

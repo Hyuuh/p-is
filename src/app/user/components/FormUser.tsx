@@ -64,7 +64,6 @@ const formSchema = z.object({
 function FormUser() {
   const router = useRouter()
   const testStore = useTestStore()
-  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,10 +74,6 @@ function FormUser() {
     }
   })
   function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: 'Se está generando las pruebas...',
-      description: 'La redirección puede tardar unos segundos...'
-    })
     const user: TestUser = {
       id: uuid(),
       name: values.name,
