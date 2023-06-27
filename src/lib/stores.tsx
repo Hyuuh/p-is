@@ -5,6 +5,7 @@ import { TestData, TestHandler, TestJSON } from './Tests'
 interface numberTestState {
   count: number
   inc: () => void
+  set: (count: number) => void
 }
 export const useNumberTestStore = create<
   numberTestState,
@@ -12,7 +13,8 @@ export const useNumberTestStore = create<
 >(
   devtools((set) => ({
     count: 1,
-    inc: () => set((state) => ({ count: state.count + 1 }))
+    inc: () => set((state) => ({ count: state.count + 1 })),
+    set: (count: number) => set({ count })
   }))
 )
 

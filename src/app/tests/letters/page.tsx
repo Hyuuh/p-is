@@ -147,6 +147,7 @@ export default function Home() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setCanResponse(false)
     clearTimeout(submitTimeout!)
+    form.resetField('userResponse')
     let correctAnswer: string = ordenarString([...currentQuestions].join(''))
     if (values.userResponse!.toUpperCase() == correctAnswer.toUpperCase()) {
       setRaw((r) => {
@@ -161,12 +162,13 @@ export default function Home() {
           (t) => t.id === numberTest.count
         )!
         testStore.editTest(currentTest!, indexTest)
-        numberTest.inc()
+        numberTest.set(1)
         router.push('/finish')
         return
       }
       if (incisions == 3) {
         setIncisions(1)
+        setErrors(0)
         setSections(sections + 1)
       } else setIncisions(incisions + 1)
       setResetEffect(!resetEffect)
@@ -178,7 +180,7 @@ export default function Home() {
           (t) => t.id === numberTest.count
         )!
         testStore.editTest(currentTest!, indexTest)
-        numberTest.inc()
+        numberTest.set(1)
         return router.push('/finish')
       } else {
         setErrors((e) => e + 1)
@@ -189,7 +191,7 @@ export default function Home() {
             (t) => t.id === numberTest.count
           )!
           testStore.editTest(currentTest!, indexTest)
-          numberTest.inc()
+          numberTest.set(1)
           router.push('/finish')
           return
         }
@@ -223,7 +225,7 @@ export default function Home() {
                     <FormControl>
                       <Input
                         disabled={!canResponse}
-                        className='placeholder:text-center'
+                        className='placeholder:text-center uppercase text-center'
                         autoComplete='off'
                         {...field}
                       />

@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { FastForward } from '@phosphor-icons/react'
 import { Input } from '@/components/ui/input'
 
@@ -142,6 +141,7 @@ export default function Home() {
 
       if (incisions == 2) {
         setIncisions(1)
+        setErrors(0)
         setSections(sections + 1)
       } else setIncisions(2)
       setResetEffect(!resetEffect)
@@ -209,13 +209,13 @@ export default function Home() {
                   </FormItem>
                 )}
               />
-              <Button
+              <button
                 type='submit'
-                className='w-full'
+                className='w-full bg-emerald-600 dark:bg-white dark:text-black text-black font-black text-center px-2 py-1 flex items-center justify-center rounded text-sm'
                 hidden={canResponse || numberText != ''}>
                 <FastForward size={24} className='mr-2' />
-                Saltar
-              </Button>
+                Enviar
+              </button>
             </form>
           </Form>
         </CardContent>
