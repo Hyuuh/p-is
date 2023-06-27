@@ -120,7 +120,7 @@ function FormUser() {
                     <Input
                       placeholder='Edad'
                       autoComplete='off'
-                      type='text'
+                      type='number'
                       {...field}
                     />
                   </FormControl>
