@@ -203,7 +203,7 @@ export default function Home() {
                       <input
                         autoFocus
                         disabled={!canResponse}
-                        className='input input-primary input-bordered placeholder:text-center disabled:border-error'
+                        className='input input-primary input-bordered placeholder:text-center'
                         autoComplete='off'
                         {...field}
                       />

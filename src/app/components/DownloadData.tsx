@@ -20,7 +20,7 @@ export default function DownloadData() {
       }, 2000)
       return sendNotification('Datos borrados')
     }
-    if (!testsStore.tests.length) return alert('No hay datos para descargar.')
+    if (!testsStore.tests.length) return sendNotification('No hay datos para descargar.')
     const headers = [
       'fecha',
       'nombre',
