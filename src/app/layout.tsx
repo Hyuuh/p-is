@@ -19,7 +19,7 @@ const supremeFont = localFont({
 export const metadata: Metadata = {
   title: 'P-IS',
   description: 'P-IS',
-  icons: '/escudo.png'
+  icons: '/icon.png'
 }
 
 export default function RootLayout({

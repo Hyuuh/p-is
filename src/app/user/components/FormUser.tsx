@@ -33,7 +33,6 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
 import { useTestStore } from '@/lib/stores'
 
 const formSchema = z.object({
@@ -137,7 +136,7 @@ function FormUser() {
                 <FormItem>
                   <FormLabel>Lateralidad</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={field.onChange as (value: string) => void}
                     defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
