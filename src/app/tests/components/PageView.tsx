@@ -5,9 +5,9 @@ import { useNumberTestStore } from '@/lib/stores'
 export default function PageView() {
   const numberTest = useNumberTestStore()
   const testText = [
-    'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.',
-    'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.',
-    'En esta sección se le presentarán una serie de instrucciones que deberá seguir para completar el test.'
+    'Memoriza la secuencia de números, e introduce en el orden que se muestra.',
+    'Memoriza la secuencia de números, e introduce en el orden inverso.',
+    'Memoriza la secuencia de números y letras, tendrás que introducir los números de menor a mayor, y las letras en orden alfabético.\nEjemplo: 123ABC'
   ]
   return (
     <section className='flex flex-col items-center justify-center gap-10 text-black dark:text-white'>
