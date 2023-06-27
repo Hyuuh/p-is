@@ -101,6 +101,7 @@ export default function Home() {
             setTimeout(() => {
               setCanResponse(false)
               clearTimeout(submitTimeout!)
+              form.clearErrors()
             }, 3000)
           )
           setTimeout(() => {
@@ -183,28 +184,26 @@ export default function Home() {
   }
   return (
     <main className='flex min-h-screen flex-col items-center justify-center gap-10'>
-      <Card className='w-[400px]'>
-        <CardHeader>
-          <p className='uppercase text-8xl font-black text-center'>
+      <article className='card card-compact w-[400px] bg-base-200 shadow-xl'>
+        <section className='card-body items-center text-center'>
+          <h2 className='card-title uppercase text-8xl font-black text-center'>
             {numberText}
-          </p>
-        </CardHeader>
-        <CardContent>
+          </h2>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className='flex flex-col gap-8'>
+              className='card-actions flex flex-col gap-8 items-center'>
               <FormField
                 control={form.control}
                 name='userResponse'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='flex flex-col'>
                     <FormLabel>Respuesta</FormLabel>
                     <FormControl>
-                      <Input
+                      <input
                         autoFocus
                         disabled={!canResponse}
-                        className='placeholder:text-center'
+                        className='input input-primary input-bordered placeholder:text-center'
                         autoComplete='off'
                         {...field}
                       />
@@ -215,15 +214,15 @@ export default function Home() {
               />
               <button
                 type='submit'
-                className='w-full bg-emerald-600 dark:bg-white dark:text-black text-black font-black text-center px-2 py-1 flex items-center justify-center rounded text-sm'
+                className='btn btn-primary group transition'
                 hidden={canResponse || numberText != ''}>
-                <FastForward size={24} className='mr-2' />
+                <FastForward className='w-6 h-6 group-hover:translate-x-1 ease-linear transition' />
                 Enviar
               </button>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+        </section>
+      </article>
     </main>
   )
 }
