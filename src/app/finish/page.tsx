@@ -19,17 +19,19 @@ function Page() {
     return () => {}
   }, [router, testStore, testsStore])
   return (
-    <main className='flex min-h-screen items-center justify-center text-black dark:text-white'>
-      <section className=''>
-        <div className='flex flex-col items-center gap-10'>
-          <p className='text-6xl uppercase font-bespoke'>
+    <main className='hero min-h-screen bg-base-200'>
+      <div className='hero-content text-center'>
+        <div className='max-w-none prose'>
+          <h1 className='text-5xl lg:text-7xl font-bold font-bespoke uppercase'>
             Gracias por participar
-          </p>
-          <Link className={buttonVariants({ variant: 'outline' })} href={'/'}>
-            Regresar
-          </Link>
+          </h1>
+          <div className=''>
+            <Link className={'btn btn-success'} href={'/'}>
+              Regresar
+            </Link>
+          </div>
         </div>
-      </section>
+      </div>
     </main>
   )
 }

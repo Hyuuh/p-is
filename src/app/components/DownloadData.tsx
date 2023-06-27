@@ -1,7 +1,6 @@
 'use client'
 
 import { useTestsStore } from '@/lib/stores'
-import { Button } from '@/components/ui/button'
 import { CloudArrowDown } from '@phosphor-icons/react'
 import { MouseEvent, useState } from 'react'
 import { sendNotification } from '@tauri-apps/api/notification'
@@ -67,14 +66,13 @@ export default function DownloadData() {
   }
 
   return (
-    <Button
+    <button
       onClick={download as any}
-      className={clsx('dark:bg-emerald-400 ', {
-        'bg-emerald-600': !clear,
-        'bg-red-600': clear
+      className={clsx('btn join-item', {
+        'bg-error': clear
       })}>
-      <CloudArrowDown size={24} className='mr-2' />
+      <CloudArrowDown className='w-6 h-6' />
       Descargar Datos
-    </Button>
+    </button>
   )
 }

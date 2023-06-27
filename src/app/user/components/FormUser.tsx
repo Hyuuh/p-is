@@ -9,19 +9,6 @@ import { v4 as uuid } from 'uuid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import { Card, CardContent } from '@/components/ui/card'
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
-
-import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import {
   Form,
@@ -32,7 +19,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { useTestStore } from '@/lib/stores'
 
 const formSchema = z.object({
@@ -86,8 +72,8 @@ function FormUser() {
     router.push('/tests')
   }
   return (
-    <Card className='w-[400px] p-5'>
-      <CardContent>
+    <article className='card w-[400px] p-5 bg-base-200 shadow-xl'>
+      <section className='card-body'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -100,9 +86,9 @@ function FormUser() {
                 <FormItem>
                   <FormLabel>Identidad</FormLabel>
                   <FormControl>
-                    <Input
+                    <input
                       placeholder='Nombre Apellido'
-                      className='placeholder:text-center'
+                      className='input input-bordered input-primary placeholder:text-center w-full'
                       {...field}
                       autoComplete='off'
                     />
@@ -110,7 +96,7 @@ function FormUser() {
                   <FormDescription>
                     Ingrese su nombre y apellido
                   </FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-error'/>
                 </FormItem>
               )}
             />
@@ -121,15 +107,16 @@ function FormUser() {
                 <FormItem>
                   <FormLabel>Edad</FormLabel>
                   <FormControl>
-                    <Input
+                    <input
                       placeholder='Edad'
                       autoComplete='off'
+                      className='input input-bordered input-primary placeholder:text-center w-full'
                       type='number'
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>Ingrese su edad</FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-error' />
                 </FormItem>
               )}
             />
@@ -139,35 +126,28 @@ function FormUser() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Lateralidad</FormLabel>
-                  <Select
-                    onValueChange={field.onChange as (value: string) => void}
-                    defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Selecciona' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Lateralidades</SelectLabel>
-                        <SelectItem value='right'>Diestro</SelectItem>
-                        <SelectItem value='left'>Zurdo</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <select
+                      className='select select-primary w-full max-w-xs'
+                      onChange={field.onChange}
+                      defaultValue={field.value}>
+                      <option value={'right'}>Diestro</option>
+                      <option value={'left'}>Zurdo</option>
+                    </select>
+                  </FormControl>
                   <FormDescription>¿Eres diestro o zurdo?</FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-error'/>
                 </FormItem>
               )}
             />
-            <Button type='submit' className='w-full'>
-              <ShareFat size={24} className='mr-2' />
+            <button type='submit' className='btn btn-secondary w-full'>
+              <ShareFat className='w-6 h-6' />
               Submit
-            </Button>
+            </button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </section>
+    </article>
   )
 }
 

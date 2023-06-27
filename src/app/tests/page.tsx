@@ -3,12 +3,14 @@ import GoTo from './components/GoTo'
 
 export default function Home() {
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center gap-10'>
-      <div className=''>
-        <PageView />
-      </div>
-      <div className=''>
-        <GoTo />
+    <main className='hero min-h-screen'>
+      <div className='hero-content text-center'>
+        <article className='max-w-none flex flex-col prose'>
+          <PageView />
+          <div className=''>
+            <GoTo />
+          </div>
+        </article>
       </div>
     </main>
   )

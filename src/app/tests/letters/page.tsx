@@ -6,8 +6,6 @@ import { useNumberTestStore, useTestStore } from '@/lib/stores'
 import { TestData } from '@/lib/Tests'
 import { ordenarString } from '@/lib/array'
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
@@ -19,9 +17,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { FastForward } from '@phosphor-icons/react'
-import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
   userResponse: z.string().optional()
@@ -209,28 +205,26 @@ export default function Home() {
   }
   return (
     <main className='flex min-h-screen flex-col items-center justify-center gap-10'>
-      <Card className='w-[400px]'>
-        <CardHeader>
-          <p className='uppercase text-8xl font-black text-center'>
+      <article className='card card-compact w-[400px] bg-base-200 shadow-xl'>
+        <section className='card-body items-center text-center'>
+          <h2 className='card-title uppercase text-8xl font-black text-center'>
             {numberText}
-          </p>
-        </CardHeader>
-        <CardContent>
+          </h2>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className='flex flex-col gap-8'>
+              className='card-actions flex flex-col gap-8 items-center'>
               <FormField
                 control={form.control}
                 name='userResponse'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='flex flex-col'>
                     <FormLabel>Respuesta</FormLabel>
                     <FormControl>
-                      <Input
-                        disabled={!canResponse}
+                      <input
                         autoFocus
-                        className='placeholder:text-center uppercase text-center'
+                        disabled={!canResponse}
+                        className='input input-primary input-bordered placeholder:text-center disabled:border-error'
                         autoComplete='off'
                         {...field}
                       />
@@ -239,17 +233,17 @@ export default function Home() {
                   </FormItem>
                 )}
               />
-              <Button
+              <button
                 type='submit'
-                className='w-full'
+                className='btn btn-primary group transition'
                 hidden={canResponse || numberText != ''}>
-                <FastForward size={24} className='mr-2' />
-                Saltar
-              </Button>
+                <FastForward className='w-6 h-6 group-hover:translate-x-1 ease-linear transition' />
+                Enviar
+              </button>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+        </section>
+      </article>
     </main>
   )
 }
