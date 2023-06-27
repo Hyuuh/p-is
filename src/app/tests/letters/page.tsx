@@ -131,8 +131,11 @@ export default function Home() {
           setSubmitTimeout(
             setTimeout(() => {
               setCanResponse(false)
-            }, 15000)
+            }, 2000)
           )
+          setTimeout(() => {
+            form.setFocus('userResponse')
+          }, 25)
           return clearInterval(currentInterval!)
         }
         setNumberText(questions[currentIndex].toString() || '')
@@ -173,7 +176,7 @@ export default function Home() {
       } else setIncisions(incisions + 1)
       setResetEffect(!resetEffect)
     } else {
-      if (errors == 1) {
+      if (errors == 2) {
         currentTest!.raw = raw.join('')
         currentTest!.errors = errors + 1
         const indexTest = testStore.test?.tests.findIndex(
@@ -197,6 +200,7 @@ export default function Home() {
         }
         if (incisions == 3) {
           setIncisions(1)
+          setErrors(0)
           setSections(sections + 1)
         } else setIncisions(incisions + 1)
         setResetEffect(!resetEffect)
@@ -225,6 +229,7 @@ export default function Home() {
                     <FormControl>
                       <Input
                         disabled={!canResponse}
+                        autoFocus
                         className='placeholder:text-center uppercase text-center'
                         autoComplete='off'
                         {...field}

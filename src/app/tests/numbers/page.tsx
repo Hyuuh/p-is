@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useNumberTestStore, useTestStore, useTestsStore } from '@/lib/stores'
 import { TestData } from '@/lib/Tests'
@@ -101,8 +101,11 @@ export default function Home() {
             setTimeout(() => {
               setCanResponse(false)
               clearTimeout(submitTimeout!)
-            }, 15000)
+            }, 3000)
           )
+          setTimeout(() => {
+            form.setFocus('userResponse')
+          }, 50)
           return clearInterval(currentInterval!)
         }
         setNumberText(questions[currentIndex].toString() || '')
@@ -199,6 +202,7 @@ export default function Home() {
                     <FormLabel>Respuesta</FormLabel>
                     <FormControl>
                       <Input
+                        autoFocus
                         disabled={!canResponse}
                         className='placeholder:text-center'
                         autoComplete='off'

@@ -3,12 +3,27 @@
 import { useTestsStore } from '@/lib/stores'
 import { Button } from '@/components/ui/button'
 import { CloudArrowDown } from '@phosphor-icons/react'
+import { MouseEvent, useState } from 'react'
+import { sendNotification } from '@tauri-apps/api/notification'
+import clsx from 'clsx'
 
 export default function DownloadData() {
+  const [clear, setClear] = useState(false)
   const testsStore = useTestsStore()
-  const download = () => {
+  const download = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // check if user press shift + click when click on button
+    if (event.shiftKey) {
+      // clear tests
+      testsStore.setTests([])
+      setClear(true)
+      setTimeout(() => {
+        setClear(false)
+      }, 2000)
+      return sendNotification('Datos borrados')
+    }
     if (!testsStore.tests.length) return alert('No hay datos para descargar.')
     const headers = [
+      'fecha',
       'nombre',
       'edad',
       'lateralidad',
@@ -18,7 +33,19 @@ export default function DownloadData() {
     ]
     let contenido = '\ufeff' + headers.join(';') + '\n'
     for (const test of testsStore.tests) {
+      const formatDate = (date: Date) => {
+        const itdl = Intl.DateTimeFormat('es-ES', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        })
+        return itdl.format(date)
+      }
       const row = [
+        formatDate(test.user.createdAt),
         test.user.name,
         test.user.age,
         test.user.laterality == 'left' ? 'zurdo' : 'diestro',
@@ -40,7 +67,12 @@ export default function DownloadData() {
   }
 
   return (
-    <Button onClick={download} className='dark:bg-emerald-400 bg-emerald-600'>
+    <Button
+      onClick={download as any}
+      className={clsx('dark:bg-emerald-400 ', {
+        'bg-emerald-600': !clear,
+        'bg-red-600': clear
+      })}>
       <CloudArrowDown size={24} className='mr-2' />
       Descargar Datos
     </Button>

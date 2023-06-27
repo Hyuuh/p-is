@@ -6,7 +6,8 @@ export interface TestUser {
 	id: string
 	name: string
 	age: number
-	laterality: string
+	laterality: string,
+	createdAt: Date;
 }
 
 export interface TestData {

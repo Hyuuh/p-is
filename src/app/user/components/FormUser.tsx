@@ -77,7 +77,8 @@ function FormUser() {
       id: uuid(),
       name: values.name,
       age: Number(values.age),
-      laterality: values.laterality
+      laterality: values.laterality,
+      createdAt: new Date()
     }
     const testHandler = new TestHandler(user)
     testHandler.setup()
@@ -88,7 +89,10 @@ function FormUser() {
     <Card className='w-[400px] p-5'>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-8'
+            autoComplete='off'>
             <FormField
               control={form.control}
               name='name'
@@ -99,8 +103,8 @@ function FormUser() {
                     <Input
                       placeholder='Nombre Apellido'
                       className='placeholder:text-center'
-                      autoComplete='off'
                       {...field}
+                      autoComplete='off'
                     />
                   </FormControl>
                   <FormDescription>
