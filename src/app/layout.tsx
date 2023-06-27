@@ -36,7 +36,7 @@ export default function RootLayout({
           <nav className='p-4 flex items-center gap-4'>
             <div className='w-24'>
               <Image
-                src={'/escudo.png'}
+                src={'/escudo.webp'}
                 alt='escudo uabc'
                 width={1024}
                 height={1024}
@@ -44,7 +44,7 @@ export default function RootLayout({
             </div>
             <div className='w-36'>
               <Image
-                src={'/isotipo.png'}
+                src={'/isotipo.webp'}
                 alt='isotipo uabc'
                 width={1024}
                 height={1024}
