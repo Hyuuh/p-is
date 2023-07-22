@@ -32,7 +32,7 @@ export default function RootLayout({
       lang='en'
       className={`${bespokeFont.variable} ${supremeFont.variable} select-none font-supreme min-h-screen overflow-hidden`}>
       <body id='bg__body'>
-        <header className='flex w-full fixed top-0 left-0'>
+        <header className='flex w-full fixed top-0 left-0 -z-20'>
           <nav className='p-4 flex items-center gap-4'>
             <div className='w-24'>
               <Image

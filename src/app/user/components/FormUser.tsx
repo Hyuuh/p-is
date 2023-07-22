@@ -74,7 +74,7 @@ function FormUser() {
   })
   function onSubmit(values: z.infer<typeof formSchema>) {
     const user: TestUser = {
-      id: uuid(),
+      id: crypto.randomUUID(),
       name: values.name,
       age: Number(values.age),
       laterality: values.laterality,
